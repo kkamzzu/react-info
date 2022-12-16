@@ -1,24 +1,70 @@
-import logo from './logo.svg';
-import './App.css';
+//컴포넌트
+import AddApointment from './component/AddApointment';
+import AddInfo from './component/AddInfo';
+import Search from './component/Search';
+
+//목업
+// import AppointData from './data.json';
+
+import {BiArchiveIn} from 'react-icons/bi'
+import './App.css'
+import { useCallback,useEffect,useState } from 'react';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  //state
+  //기본배열 변경 되는 얘들
+  const [appointList, setAppointList] =useState([])
+
+//정렬의 기본, search의 값
+  const [query,setQuery] = useState('')
+
+
+  //function
+  //callBackt 
+  const filterAppointment = appointList.filter(
+    item => {
+      return (
+        item.petName.toLowerCase().includes(query.toLowerCase()) ||
+        item.ownerName.toLowerCase().includes(query.toLowerCase()) ||
+        item.aptNotes.toLowerCase().includes(query.toLowerCase()) 
+      )
+    }
+  )
+
+  const fetchData = useCallback(
+    () => {
+      fetch('./data.json', {
+        headers:{
+          Accept:{
+            Accept:'application/json'
+          }
+        }
+      })
+      .then(response => response.json())
+      .then(data => setAppointList(data))
+    },[]
+  )
+
+  //useEffec
+useEffect(()=>{fetchData()},[fetchData])
+
+  return(
+    <article>
+      <h3><BiArchiveIn style={{color:'#4495f7'}}/>예약시스템</h3>
+      <div><AddApointment /></div>
+      <div><Search /></div>
+      <div id="list">
+
+        <ul>
+          
+          {filterAppointment.map( appointment => 
+          (<AddInfo 
+            key={appointment.id}
+            appointment = {appointment}/> ))
+            }
+        </ul>
+      </div>
+    </article>
   );
 }
 
