@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const num = [1, 4, 11, 2, 45, 7]
+        document.write('일반아스키모드' + num.sort() + '<br>')
+        const num1 = num.sort((a,b) => {return a - b} )
+        document.write('올림차순' + num1, '<br>')
+        const num2 = num.sort((a,b) => {return b - a} )
+        document.write('내림차순' + num1, '<br>','<br>')
+    </script>
+
+
+
+    <script>
+        const str = ['a','b','f','d'];
+        str.sort((a,b)=> {
+            if(a>b){return 1}
+            if(a<b){return -1}
+            if(a === b){return 0}
+        })
+        document.write('올림차순' + str,'<br>' )
+
+
+        const str1 = ['a','b','f','d'];
+
+        str1.sort((a,b)=> {
+            if(b>a){return 1}
+            if(b<a){return -1}
+            if(a === b){return 0}
+        })
+        document.write('내림차순' + str1,'<br>' )
+
+
+    </script>
+
+    <!-- <script>
+        const str = [
+            {name:'자',num:20},
+            {name:'다',num:20},
+            {name:'가',num:20},
+            {name:'나',num:20},
+            {name:'아',num:20},
+            
+        ]
+        const sec1 = str.sort((a,b)=>{
+            return a.name < b.name ? -1 : a.name ? 1 : 0
+        })
+        console.log(sec1)
+    </script> -->
+
+
+    <!-- 논리연산자 -->
+    <script>
+        const a1 = true && 'cat'; //cat
+        const a2 = false && 'dog'; //false
+        console.log(a1);
+        console.log(a2);
+        
+        const a3 = 'dog' || 'cat';
+        console.log(a3) ; //dog
+
+        const a4 = false || 'dog';
+        console.log(a4); //dog
+    </script>
+
+
+    </script>
+</body>
+</html>

@@ -1,6 +1,12 @@
-import {BiSearch,BiCaretDown,BiCheck} from 'react-icons/bi'
+import { useState } from 'react';
+import { BiSearch, BiCaretDown, BiCheck } from 'react-icons/bi'
 
-function DropDown(){
+
+
+function DropDown({toggleSort}) {
+    if(!toggleSort){
+        return null
+    }
     return (
         <ul>
             <li>애기이름</li>
@@ -8,22 +14,29 @@ function DropDown(){
             <li>날짜별</li>
             <li>올림차순</li>
             <li>내림차순</li>
-
         </ul>
     )
 }
 
 
 
-function Search(){
-    return(
+function Search() {
+
+    const [toggleSort, setToggleSort] = useState(false);
+
+    return (
         <div id="search">
             <p>
-            <BiSearch />
-            <input />
-            <button type="button"><BiCaretDown/></button>
+                <BiSearch />
+                <input />
+                <button type="button"
+                    onClick={() => setToggleSort(!toggleSort)}>
+                    정렬하기
+                    <BiCaretDown />
+                </button>
             </p>
-            <DropDown />
+            <DropDown 
+                toggleSort = {toggleSort}/>
         </div>
     )
 }
