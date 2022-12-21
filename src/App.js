@@ -13,10 +13,12 @@ import { useCallback, useEffect, useState } from 'react';
 function App() {
   //state
   //기본배열 변경 되는 얘들
-  const [appointList, setAppointList] = useState([])
+  const [appointList, setAppointList] = useState([]);
 
   //정렬의 기본, search의 값
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState('');
+  const [sortBy, setSortBy] = useState('petName');
+  const [orderBy,setOrderBy] = useState('asc');
 
 
   //function
@@ -27,6 +29,13 @@ function App() {
         item.petName.toLowerCase().includes(query.toLowerCase()) ||
         item.ownerName.toLowerCase().includes(query.toLowerCase()) ||
         item.aptNotes.toLowerCase().includes(query.toLowerCase())
+      )
+    }
+  ).sort(
+    (a,b) => {
+      let order = (orderBy === 'asc' ? 1 : -1)
+      return (
+        a[sortBy].toLowerCase() < b[sortBy].toLowerCase() ? -1 * order : 1 * order
       )
     }
   )
@@ -56,10 +65,20 @@ function App() {
         myAppointment => setAppointList([...appointList,myAppointment])
       }
       lastId = {
-        appointList.reduce((max,item)=>  Number(item.id) > max ? Number(item.id) : max, 0)
+        appointList.reduce((max,item)=>  Number(item.id) > max ? Number(item.id) : max, 0)  //:=> 왼쪽이 조건 성립할 떄, 오른쪽은 조건이 성립이 안할 때
       }
       /></div>
-      <div><Search /></div>
+      
+      <Search 
+      query= {query}
+      onQueryChange = {myQuery =>setQuery(myQuery)}
+
+      sortBy = {sortBy}
+      onSortChange = {mySort =>setSortBy(mySort)}
+
+      orderBy = {orderBy}
+      onOrderChange = {myOrder =>setOrderBy(myOrder)}
+      />
       <div id="list">
 
         <ul>
